@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddItem">
+
+    <EditText
+        android:id="@+id/editTextItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Item Name"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="102dp" />
+
+    <EditText
+        android:id="@+id/editTextItemPriority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Item Priority"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="178dp" />
+
+    <EditText
+        android:id="@+id/editTextItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Item Price"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="258dp" />
+
+    <EditText
+        android:id="@+id/editTextItemQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Item Quantity"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="343dp" />
+
+    <EditText
+        android:id="@+id/Item Unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Item Unit"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="426dp" />
+
+    <Button
+        android:id="@+id/buttonAddItemToCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Item to the Cart"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="519dp" />
+
+    <Button
+        android:id="@+id/buttonBack2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="606dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
