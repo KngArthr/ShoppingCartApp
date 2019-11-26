@@ -12,19 +12,8 @@
         <activity android:name=".FinalList"></activity>
         <activity android:name=".AddItem" />
         <activity android:name=".ItemsListScroll" />
-        <activity
-            android:name=".ScrollingItemList"
-            android:label="@string/title_activity_scrolling_item_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ItemList"
-            android:label="@string/title_activity_item_list"
-            android:parentActivityName=".Central"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shoppingcart.Central" />
-        </activity>
+
+
         <activity android:name=".Central" />
         <activity android:name=".MainActivity">
             <intent-filter>
