@@ -1,66 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FinalList">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFinalList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-        <TableLayout
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/rvFinalList"/>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
 
-                <TextView
-                    android:id="@+id/textViewFinalListItemsBoughtHeader"
-                    android:layout_width="276dp"
-                    android:layout_height="47dp"
-                    android:layout_marginTop="148dp"
-                    android:text="Items Bought"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-            </TableRow>
+    </RelativeLayout>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
 
-                <TextView
-                    android:id="@+id/textViewFinalListItemsRemainingHeader"
-                    android:layout_width="276dp"
-                    android:layout_height="47dp"
-                    android:layout_marginBottom="232dp"
-                    android:text="Items Remaining"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-            </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <TextView
-                    android:id="@+id/textViewFinalListGroceryListHeader"
-                    android:layout_width="276dp"
-                    android:layout_height="47dp"
-                    android:text="Grocery List"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </TableLayout>
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
