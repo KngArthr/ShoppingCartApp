@@ -17,12 +17,12 @@ public class Central extends AppCompatActivity {
         setContentView(R.layout.activity_central);
 
 
-        if(getIntent().hasExtra("com.Example.shoppingcart.userName")){
-            userName = getIntent().getExtras().getString("com.Example.shoppingcart.userName");
+        if(getIntent().hasExtra("com.Example.shoppingcart.userName")) {
+         //   userName = getIntent().getExtras().getString("com.Example.shoppingcart.userName");
         }
 
         if(getIntent().hasExtra("com.Example.shoppingcart.bankAccount")){
-            bankAccount = getIntent().getExtras().getString("com.Example.shoppingcart.bankAccount");
+           // bankAccount = getIntent().getExtras().getString("com.Example.shoppingcart.bankAccount");
         }
 
         Button buttonAddItemView = (Button) findViewById(R.id.buttonAddItemView);
