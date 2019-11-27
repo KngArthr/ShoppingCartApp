@@ -9,6 +9,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+
     String userName;
     String bankAccount;
 
@@ -34,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 userName = String.valueOf(editTextUserName);
                 bankAccount = (String.valueOf(editTextBudget));
 
-                //shoppingCart.setUserName(String.valueOf(editTextUserName));
-                //shoppingCart.setBankAccount(String.valueOf(editTextBudget));
+
 
                 Intent startIntent = new Intent(getApplicationContext(), Central.class);
                 startIntent.putExtra("com.Example.shoppingcart.userName", userName);

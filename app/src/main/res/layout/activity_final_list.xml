@@ -6,84 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".FinalList">
 
-    <TextView
-        android:id="@+id/textViewFinalListHeader2"
-        android:layout_width="276dp"
-        android:layout_height="47dp"
-        android:text="Items Bought"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView4" />
-
-    <TextView
-        android:id="@+id/textViewFinalListHeader3"
-        android:layout_width="276dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="232dp"
-        android:text="Items Remaining"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFinalList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView5"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textViewFinalListHeader1"
-        android:layout_width="276dp"
-        android:layout_height="47dp"
-        android:text="Grocery List"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
-        android:id="@+id/scrollView4"
-        android:layout_width="362dp"
-        android:layout_height="177dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFinalListHeader1">
-
-        <LinearLayout
+        app:layout_constraintTop_toTopOf="parent" >
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollView5"
-        android:layout_width="361dp"
-        android:layout_height="162dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFinalListHeader2">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+                <TextView
+                    android:id="@+id/textViewFinalListItemsBoughtHeader"
+                    android:layout_width="276dp"
+                    android:layout_height="47dp"
+                    android:layout_marginTop="148dp"
+                    android:text="Items Bought"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
 
-    <ScrollView
-        android:layout_width="362dp"
-        android:layout_height="171dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFinalListHeader3"
-        app:layout_constraintVertical_bias="1.0">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+                <TextView
+                    android:id="@+id/textViewFinalListItemsRemainingHeader"
+                    android:layout_width="276dp"
+                    android:layout_height="47dp"
+                    android:layout_marginBottom="232dp"
+                    android:text="Items Remaining"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textViewFinalListGroceryListHeader"
+                    android:layout_width="276dp"
+                    android:layout_height="47dp"
+                    android:text="Grocery List"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableLayout>
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
