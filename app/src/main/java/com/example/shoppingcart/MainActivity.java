@@ -9,7 +9,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    ShoppingCart shoppingCart;
+   // ShoppingCart shoppingCart;
     String userName;
     String bankAccount;
 
@@ -20,12 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            shoppingCart = new ShoppingCart();
 
-        } catch (UnsupportedFormatException e) {
-            e.printStackTrace();
-        }
 
         Button buttonProceed1 = (Button) findViewById(R.id.buttonProceed1);
 
