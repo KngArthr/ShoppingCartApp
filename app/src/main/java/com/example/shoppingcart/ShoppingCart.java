@@ -30,7 +30,7 @@ public class ShoppingCart implements ShoppingCartInterface{
         String itemQuantity;
         String itemUnit;
 
-
+        /*
         int itemCounter = 0;
         Scanner scanData = new Scanner(System.in);
 
@@ -96,7 +96,7 @@ public class ShoppingCart implements ShoppingCartInterface{
 
         }
         scanData.close();
-
+        */
         //loop runs until user is done
 
         //order the array by priority
