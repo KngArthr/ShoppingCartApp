@@ -3,11 +3,12 @@ package com.example.shoppingcart;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class ShoppingCart implements ShoppingCartInterface{
+public class ShoppingCart implements ShoppingCartInterface, Serializable {
 
     FilterData filterData = new FilterData();
 
@@ -24,13 +25,13 @@ public class ShoppingCart implements ShoppingCartInterface{
         itemList = new ArrayList<ItemClass>();
         itemListSorted = new ArrayList<ItemClass>();
         bankAccount = "0.00";
-        String itemName;
+       /* String itemName;
         String itemPriority;
         String itemPrice;
         String itemQuantity;
-        String itemUnit;
+        String itemUnit;*/
 
-
+        /*
         int itemCounter = 0;
         Scanner scanData = new Scanner(System.in);
 
@@ -101,7 +102,7 @@ public class ShoppingCart implements ShoppingCartInterface{
 
         //order the array by priority
         itemListSorted.addAll(filterData.bubbleSortByPriority(itemList));
-
+           */
         //display list of items
 		/*System.out.println(userName + "'s Shopping Cart");
 
@@ -295,7 +296,6 @@ public class ShoppingCart implements ShoppingCartInterface{
         }
         return isDuplicate;
     }
-
 
 
 

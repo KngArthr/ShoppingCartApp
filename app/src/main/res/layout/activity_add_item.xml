@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:ems="10"
+        android:hint="Item Name"
         android:inputType="textPersonName"
-        android:text="Item Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
+        android:hint="Item Priority"
         android:inputType="textPersonName"
-        android:text="Item Priority"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextItemName" />
@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
+        android:hint="Item Price"
         android:inputType="textPersonName"
-        android:text="Item Price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextItemPriority" />
@@ -48,8 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:ems="10"
+        android:hint="Item Quantity"
         android:inputType="textPersonName"
-        android:text="Item Quantity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextItemPrice" />
@@ -60,8 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:ems="10"
+        android:hint="Item Unit"
         android:inputType="textPersonName"
-        android:text="Item Unit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextItemQuantity" />
