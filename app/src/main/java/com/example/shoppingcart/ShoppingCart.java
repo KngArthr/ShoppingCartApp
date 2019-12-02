@@ -31,6 +31,8 @@ public class ShoppingCart implements ShoppingCartInterface, Serializable {
         String itemQuantity;
         String itemUnit;*/
 
+       //samosa
+
         /*
         int itemCounter = 0;
         Scanner scanData = new Scanner(System.in);

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent startIntent = new Intent(MainActivity.this, Central.class);
                 //Bundle bundle = new Bundle();
                // bundle.putSerializable("key_one", shoppingCart);
-
+                //update this shit
                 shoppingCart.setUserName(userName);
                 shoppingCart.setBankAccount(bankAccount);
                 startIntent.putExtra("key_two", shoppingCart);
