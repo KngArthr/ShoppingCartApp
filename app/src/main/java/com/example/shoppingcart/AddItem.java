@@ -8,12 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class AddItem extends AppCompatActivity {
+import java.io.Serializable;
+
+public class AddItem extends AppCompatActivity{
     String itemName;
     String itemPrice;
     String itemPriority;
     String itemQuantity;
     String itemUnit;
+    ShoppingCart shoppingCart;
 
 
     @Override
@@ -90,7 +93,9 @@ public class AddItem extends AppCompatActivity {
 
 
                 Intent startIntent = new Intent(getApplicationContext(), Central.class);
-               // startIntent.putExtra("com.Example.shoppingcart.userName", userName);
+                startIntent.putExtra("com.Example.shoppingcart.ShoppingCart", (Serializable)  getIntent().getSerializableExtra("com.Example.shoppingcart.ShoppingCart"));
+
+                // startIntent.putExtra("com.Example.shoppingcart.userName", userName);
                //you are here startIntent.putExtra("com.Example.shoppingcart.bankAccount", bankAccount);
 
                 startActivity(startIntent);

@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
 
     String userName;
@@ -18,10 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        try {
+            shoppingCart = new ShoppingCart();
+        } catch (UnsupportedFormatException e) {
+            e.printStackTrace();
+        }
 
         Button buttonProceed1 = (Button) findViewById(R.id.buttonProceed1);
 
@@ -56,27 +63,31 @@ public class MainActivity extends AppCompatActivity {
                 userName = String.valueOf(editTextUserName);
                 bankAccount = (String.valueOf(editTextBudget));
 
-                try {
-                    shoppingCart = new ShoppingCart();
-                } catch (UnsupportedFormatException e) {
-                    e.printStackTrace();
-                }
+
+
+
+
+
+
+                Intent startIntent = new Intent(MainActivity.this, Central.class);
+                //Bundle bundle = new Bundle();
+               // bundle.putSerializable("key_one", shoppingCart);
 
                 shoppingCart.setUserName(userName);
                 shoppingCart.setBankAccount(bankAccount);
+                startIntent.putExtra("key_two", shoppingCart);
+                //startIntent.putExtra("key_two", shoppingCart);
 
-
-
-                Intent startIntent = new Intent(getApplicationContext(), Central.class);
-               // startIntent.pu
-               // you are startIntent.putExtra("com.Example.shoppingcart.shoppingCart", shoppingCart);
-                startIntent.putExtra("com.Example.shoppingcart.bankAccount", bankAccount);
+                // startIntent.putExtras(bundle);
+                //startIntent.putExtra("com.Example.shoppingcart.shoppingCart", shoppingCart);
+                //startIntent.putExtra("com.Example.shoppingcart.bankAccount", bankAccount);
 
                 startActivity(startIntent);
 
 
             }
         });
+
 
 
 
