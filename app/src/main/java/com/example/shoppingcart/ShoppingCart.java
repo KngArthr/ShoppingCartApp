@@ -1,14 +1,17 @@
 package com.example.shoppingcart;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//import java.io.Serializable;
 
-public class ShoppingCart implements ShoppingCartInterface, Serializable {
+
+public class ShoppingCart implements ShoppingCartInterface, Parcelable {
 
     FilterData filterData = new FilterData();
 
@@ -19,6 +22,42 @@ public class ShoppingCart implements ShoppingCartInterface, Serializable {
     private File shoppingListFile;
 
     private String bankAccount;
+
+
+    //parcel stuff>
+    public ShoppingCart(Parcel parcel){
+        userName = parcel.readString();
+        bankAccount = parcel.readString();
+        itemList = parcel.readArrayList(null);
+        itemListSorted = parcel.readArrayList(null);
+    }
+    public static final Creator<ShoppingCart> CREATOR = new Creator<ShoppingCart>() {
+        @Override
+        public ShoppingCart createFromParcel(Parcel in) {
+            return new ShoppingCart(in);
+        }
+
+
+        @Override
+        public ShoppingCart[] newArray(int size) {
+            return new ShoppingCart[size];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userName);
+        dest.writeString(bankAccount);
+        dest.writeList(itemList);
+        dest.writeList(itemListSorted);
+
+
+    }
+    //<parcel stuff
 
     ShoppingCart() throws UnsupportedFormatException{
         userName = "N/A";
@@ -223,11 +262,7 @@ public class ShoppingCart implements ShoppingCartInterface, Serializable {
 
 		}*/
 
-
-
-
     }
-
 
 
     public void setItemList(ArrayList<ItemClass> itemList) {
@@ -298,16 +333,6 @@ public class ShoppingCart implements ShoppingCartInterface, Serializable {
         }
         return isDuplicate;
     }
-
-
-
-
-
-
-
-
-
-
 
 
 

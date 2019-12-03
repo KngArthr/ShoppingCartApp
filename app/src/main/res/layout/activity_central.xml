@@ -53,8 +53,8 @@
 
     <TextView
         android:id="@+id/textViewUsername"
-        android:layout_width="91dp"
-        android:layout_height="27dp"
+        android:layout_width="157dp"
+        android:layout_height="28dp"
         android:text="userName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,4 +62,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
+
+    <TextView
+        android:id="@+id/textViewbankAccount"
+        android:layout_width="157dp"
+        android:layout_height="31dp"
+        android:text="bankAccount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

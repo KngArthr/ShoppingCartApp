@@ -1,8 +1,11 @@
 package com.example.shoppingcart;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class ItemClass implements ItemInterface {
+public class ItemClass implements ItemInterface, Parcelable {
     private String itemName;
     private int itemPriority;
     private double itemPrice;
@@ -102,5 +105,39 @@ public class ItemClass implements ItemInterface {
         }
         return isDuplicate;
     }
+    public ItemClass(Parcel parcel){
+        itemName = parcel.readString();
+        itemPrice = parcel.readInt();
+        itemPriority = parcel.readInt();
+        itemQuantity = parcel.readInt();
+        itemUnit = parcel.readString();
 
+    }
+
+    public static final Creator<ItemClass> CREATOR = new Creator<ItemClass>() {
+        @Override
+        public ItemClass createFromParcel(Parcel in) {
+            return new ItemClass(in);
+        }
+
+
+        @Override
+        public ItemClass[] newArray(int size) {
+            return new ItemClass[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return hashCode();    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(itemName);
+        dest.writeInt(itemPriority);
+        dest.writeDouble(itemPrice);
+        dest.writeInt(itemQuantity);
+        dest.writeString(itemUnit);
+
+    }
 }

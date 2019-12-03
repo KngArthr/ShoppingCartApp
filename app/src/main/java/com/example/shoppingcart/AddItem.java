@@ -1,14 +1,21 @@
 package com.example.shoppingcart;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.io.Serializable;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AddItem extends AppCompatActivity{
     String itemName;
@@ -16,7 +23,34 @@ public class AddItem extends AppCompatActivity{
     String itemPriority;
     String itemQuantity;
     String itemUnit;
-    ShoppingCart shoppingCart;
+
+
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myShoppingCarts = database.getReference("Carts");
+
+    //ShoppingCart shoppingCart;
+    ArrayList<ItemClass> itemList = new ArrayList<ItemClass>();
+
+
+    protected void onStart() {
+
+        super.onStart();
+
+        myShoppingCarts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot cartSnapshot: dataSnapshot.getChildren()){
+                    ShoppingCart shoppingCart = cartSnapshot.getValue(ShoppingCart.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
     @Override
@@ -33,6 +67,9 @@ public class AddItem extends AppCompatActivity{
         final EditText editTextItemPriority = (EditText) findViewById(R.id.editTextItemPriority);
         final EditText editTextItemQuantity = (EditText) findViewById(R.id.editTextItemQuantity);
         final EditText editTextItemUnit = (EditText) findViewById(R.id.editTextItemUnit);
+        Intent getIntent = getIntent();
+
+        //shoppingCart = getIntent.getParcelableExtra("key_shoppingCart");
 
 
         editTextItemName.setOnClickListener(new View.OnClickListener() {
@@ -84,19 +121,36 @@ public class AddItem extends AppCompatActivity{
                 EditText editTextItemUnit = (EditText) findViewById(R.id.editTextItemUnit);
 
 
-                itemName = String.valueOf(editTextItemName);
-                itemPrice = String.valueOf(editTextItemPrice);
-                itemPriority = String.valueOf(editTextItemPriority);
-                itemQuantity = String.valueOf(editTextItemQuantity);
-                itemUnit = String.valueOf(editTextItemUnit);
+
+                itemName = editTextItemName.getText().toString();
+                itemPrice = editTextItemPrice.getText().toString();
+                itemPriority = editTextItemPriority.getText().toString();
+                itemQuantity = editTextItemQuantity.getText().toString();
+                itemUnit = editTextItemUnit.getText().toString();
+
+               // myShoppingCarts.child(MainActivity.getId());
+               // String id = MainActivity.getId();
+
+                Bundle bundle = new Bundle();
+
+                bundle.putString("key_itemName", itemName);
+                bundle.putString("key_itemPrice", itemPrice);
+                bundle.putString("key_itemPriority", itemPriority);
+                bundle.putString("key_itemQuantity", itemQuantity);
+                bundle.putString("key_itemUnit", itemUnit);
 
 
 
                 Intent startIntent = new Intent(getApplicationContext(), Central.class);
-                startIntent.putExtra("com.Example.shoppingcart.ShoppingCart", (Serializable)  getIntent().getSerializableExtra("com.Example.shoppingcart.ShoppingCart"));
 
-                // startIntent.putExtra("com.Example.shoppingcart.userName", userName);
-               //you are here startIntent.putExtra("com.Example.shoppingcart.bankAccount", bankAccount);
+                itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+
+                //startIntent.putExtra("key_bundle", bundle);
+
+                //shoppingCart.setItemList(itemList);
+
+               // startIntent.putExtra("key_shoppingCart", shoppingCart);
+
 
                 startActivity(startIntent);
 

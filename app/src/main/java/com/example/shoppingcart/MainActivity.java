@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.Serializable;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,21 +18,25 @@ public class MainActivity extends AppCompatActivity {
     String bankAccount;
     ShoppingCart shoppingCart;
 
-
+    DatabaseReference myShoppingCarts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         try {
             shoppingCart = new ShoppingCart();
         } catch (UnsupportedFormatException e) {
             e.printStackTrace();
-        }
+        };
+
+        myShoppingCarts = FirebaseDatabase.getInstance().getReference().child("carts");
 
         Button buttonProceed1 = (Button) findViewById(R.id.buttonProceed1);
+
 
         final EditText editTextUserName = (EditText) findViewById(R.id.editTextUserName);
         final EditText editTextBudget = (EditText) findViewById(R.id.editTextBudget);
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         editTextUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextUserName.getText().clear(); //or you can use editText.setText("");
+                //editTextUserName.getText().clear(); //or you can use editText.setText("");
 
             }
         });
@@ -48,41 +54,48 @@ public class MainActivity extends AppCompatActivity {
         editTextBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextBudget.getText().clear(); //or you can use editText.setText("");
+                //editTextBudget.getText().clear(); //or you can use editText.setText("");
 
             }
         });
 
 
+
+
+
         buttonProceed1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editTextUserName = (EditText) findViewById(R.id.editTextUserName);
-                EditText editTextBudget = (EditText) findViewById(R.id.editTextBudget);
 
-                userName = String.valueOf(editTextUserName);
-                bankAccount = (String.valueOf(editTextBudget));
+                userName = editTextUserName.getText().toString();
+                bankAccount = editTextBudget.getText().toString();
 
 
+                if(userName.isEmpty() && bankAccount.isEmpty()){
+
+                    Toast.makeText(getApplicationContext(), "Please make entries in both fields.", Toast.LENGTH_LONG).show();
+
+
+                }else{
+
+
+                    shoppingCart.setUserName(userName);
+                    shoppingCart.setBankAccount(bankAccount);
+
+                    myShoppingCarts.child(shoppingCart.getUserName()).setValue(shoppingCart);
 
 
 
+                    Toast.makeText(getApplicationContext(), "Created new shopping cart with Username: " + shoppingCart.getUserName() + " and Budget: " + shoppingCart.getBankAccount(), Toast.LENGTH_LONG).show();
+
+                    Intent startIntent = new Intent(MainActivity.this, Central.class);
+
+                    startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
+                    startActivity(startIntent);
 
 
-                Intent startIntent = new Intent(MainActivity.this, Central.class);
-                //Bundle bundle = new Bundle();
-               // bundle.putSerializable("key_one", shoppingCart);
-                //update this shit
-                shoppingCart.setUserName(userName);
-                shoppingCart.setBankAccount(bankAccount);
-                startIntent.putExtra("key_two", shoppingCart);
-                //startIntent.putExtra("key_two", shoppingCart);
-
-                // startIntent.putExtras(bundle);
-                //startIntent.putExtra("com.Example.shoppingcart.shoppingCart", shoppingCart);
-                //startIntent.putExtra("com.Example.shoppingcart.bankAccount", bankAccount);
-
-                startActivity(startIntent);
+                }
 
 
             }
@@ -93,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }
