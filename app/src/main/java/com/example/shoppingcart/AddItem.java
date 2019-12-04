@@ -2,7 +2,6 @@ package com.example.shoppingcart;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,11 +67,14 @@ public class AddItem extends AppCompatActivity{
 
         userName = getIntent().getStringExtra("key_userName");
 
+
         try {
             shoppingCart = new ShoppingCart();
         } catch (UnsupportedFormatException e) {
             e.printStackTrace();
         };
+
+        shoppingCart.setUserName(userName);
 
         myShoppingCarts = FirebaseDatabase.getInstance().getReference().child("carts").child(userName);
 

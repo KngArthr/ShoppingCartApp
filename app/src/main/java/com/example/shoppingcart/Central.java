@@ -15,27 +15,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class Central extends AppCompatActivity {
     String userName;
     String bankAccount;
 
     DatabaseReference myShoppingCarts;
 
-
     ShoppingCart shoppingCart;
-
-    ArrayList<ItemClass> itemList = new ArrayList<ItemClass>();
 
     TextView textViewUsername;
     TextView textViewbankAccount;
 
-    String itemName;
-    String itemPrice;
-    String itemPriority;
-    String itemQuantity;
-    String itemUnit;
+
 
 
     @Override
@@ -57,6 +48,7 @@ public class Central extends AppCompatActivity {
             e.printStackTrace();
         };
 
+        shoppingCart.setUserName(userName);
 
         myShoppingCarts = FirebaseDatabase.getInstance().getReference().child("carts").child(userName);
 
@@ -83,22 +75,9 @@ public class Central extends AppCompatActivity {
 
                 userName = dataSnapshot.child("userName").getValue().toString();
 
-
-
-
-               /* for(int i = 0; i < itemList.size(); i++){
-                    itemList.get(i).setItemName(dataSnapshot.child("itemList").getValue().toString());
-                    itemList.get(i).setPrice(Double.parseDouble(dataSnapshot.child("itemList").getValue()));
-                    itemList.get(i).setPriority(dataSnapshot.child("itemList").getValue().toString());
-                    itemList.get(i).setQuantity(dataSnapshot.child("itemList").getValue().toString());
-                    itemList.get(i).setUnit(dataSnapshot.child("itemList").getValue().toString());
-
-                }*/
                 textViewbankAccount.setText(bankAccount + "");
 
-                textViewUsername.setText(userName + "");
-
-
+                textViewUsername.setText(shoppingCart.getUserName() + "");
 
             }
 
@@ -111,11 +90,6 @@ public class Central extends AppCompatActivity {
 
 
         //itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
-        //check = shoppingCart.getItemList().get(0).getItemName();
-
-
-
-
 
 
 
