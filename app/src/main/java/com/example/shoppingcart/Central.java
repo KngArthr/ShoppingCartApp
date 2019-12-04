@@ -23,7 +23,6 @@ public class Central extends AppCompatActivity {
 
     DatabaseReference myShoppingCarts;
 
-    String check;
 
     ShoppingCart shoppingCart;
 
@@ -113,7 +112,6 @@ public class Central extends AppCompatActivity {
 
         //itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
         //check = shoppingCart.getItemList().get(0).getItemName();
-        check = userName;
 
 
 

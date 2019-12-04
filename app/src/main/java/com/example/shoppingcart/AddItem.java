@@ -2,6 +2,7 @@ package com.example.shoppingcart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,18 +19,33 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class AddItem extends AppCompatActivity{
+
+    Button buttonBack2;
+
+    Button buttonAddItemToCart;
+
+    EditText editTextItemName;
+    EditText editTextItemPrice;
+    EditText editTextItemPriority;
+    EditText editTextItemQuantity;
+    EditText editTextItemUnit;
+
     String itemName;
     String itemPrice;
     String itemPriority;
     String itemQuantity;
     String itemUnit;
 
+    String userName;
 
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myShoppingCarts = database.getReference("Carts");
+    ShoppingCart shoppingCart;
 
-    //ShoppingCart shoppingCart;
+
+    DatabaseReference myShoppingCarts;
+
+
+
     ArrayList<ItemClass> itemList = new ArrayList<ItemClass>();
 
 
@@ -37,19 +53,11 @@ public class AddItem extends AppCompatActivity{
 
         super.onStart();
 
-        myShoppingCarts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot cartSnapshot: dataSnapshot.getChildren()){
-                    ShoppingCart shoppingCart = cartSnapshot.getValue(ShoppingCart.class);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+
+
+
     }
 
 
@@ -58,24 +66,96 @@ public class AddItem extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        Button buttonBack2 = (Button) findViewById(R.id.buttonBack2);
+        userName = getIntent().getStringExtra("key_userName");
 
-        Button buttonAddItemToCart = (Button) findViewById(R.id.buttonAddItemToCart);
+        try {
+            shoppingCart = new ShoppingCart();
+        } catch (UnsupportedFormatException e) {
+            e.printStackTrace();
+        };
 
-        final EditText editTextItemName = (EditText) findViewById(R.id.editTextItemName);
-        final EditText editTextItemPrice = (EditText) findViewById(R.id.editTextItemPrice);
-        final EditText editTextItemPriority = (EditText) findViewById(R.id.editTextItemPriority);
-        final EditText editTextItemQuantity = (EditText) findViewById(R.id.editTextItemQuantity);
-        final EditText editTextItemUnit = (EditText) findViewById(R.id.editTextItemUnit);
-        Intent getIntent = getIntent();
+        myShoppingCarts = FirebaseDatabase.getInstance().getReference().child("carts").child(userName);
 
-        //shoppingCart = getIntent.getParcelableExtra("key_shoppingCart");
+        buttonBack2 = (Button) findViewById(R.id.buttonBack2);
+
+        buttonAddItemToCart = (Button) findViewById(R.id.buttonAddItemToCart);
+
+        editTextItemName = (EditText) findViewById(R.id.editTextItemName);
+        editTextItemPrice = (EditText) findViewById(R.id.editTextItemPrice);
+        editTextItemPriority = (EditText) findViewById(R.id.editTextItemPriority);
+        editTextItemQuantity = (EditText) findViewById(R.id.editTextItemQuantity);
+        editTextItemUnit = (EditText) findViewById(R.id.editTextItemUnit);
+
+        myShoppingCarts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+                if((ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue() != null){
+                    itemList = (ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue();
+
+                }
+
+                buttonAddItemToCart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        itemName = editTextItemName.getText().toString();
+                        itemPrice = editTextItemPrice.getText().toString();
+                        itemPriority = editTextItemPriority.getText().toString();
+                        itemQuantity = editTextItemQuantity.getText().toString();
+                        itemUnit = editTextItemUnit.getText().toString();
+
+
+
+                        itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+
+                        myShoppingCarts.child("itemList").setValue(itemList);
+
+
+                        Intent startIntent = new Intent(getApplicationContext(), Central.class);
+
+                        startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
+
+                        //itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+
+
+                        startActivity(startIntent);
+
+
+
+
+                    }
+                });
+
+               /* for(int i = 0; i < itemList.size(); i++){
+                    itemList.get(i).setItemName(dataSnapshot.child("itemList").getValue().toString());
+                    itemList.get(i).setPrice(Double.parseDouble(dataSnapshot.child("itemList").getValue()));
+                    itemList.get(i).setPriority(dataSnapshot.child("itemList").getValue().toString());
+                    itemList.get(i).setQuantity(dataSnapshot.child("itemList").getValue().toString());
+                    itemList.get(i).setUnit(dataSnapshot.child("itemList").getValue().toString());
+
+                }*/
+                //textViewbankAccount.setText(bankAccount + "");
+
+                //textViewUsername.setText(userName + "");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
 
         editTextItemName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextItemName.getText().clear(); //or you can use editText.setText("");
+                //editTextItemName.getText().clear(); //or you can use editText.setText("");
 
             }
         });
@@ -83,14 +163,12 @@ public class AddItem extends AppCompatActivity{
         editTextItemPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextItemPrice.getText().clear(); //or you can use editText.setText("");
 
             }
         });
         editTextItemPriority.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextItemPriority.getText().clear(); //or you can use editText.setText("");
 
             }
         });
@@ -98,14 +176,12 @@ public class AddItem extends AppCompatActivity{
         editTextItemQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextItemQuantity.getText().clear(); //or you can use editText.setText("");
 
             }
         });
         editTextItemUnit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextItemUnit.getText().clear(); //or you can use editText.setText("");
 
             }
         });
@@ -114,42 +190,18 @@ public class AddItem extends AppCompatActivity{
         buttonAddItemToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editTextItemName = (EditText) findViewById(R.id.editTextItemName);
-                EditText editTextItemPrice = (EditText) findViewById(R.id.editTextItemPrice);
-                EditText editTextItemPriority = (EditText) findViewById(R.id.editTextItemPriority);
-                EditText editTextItemQuantity = (EditText) findViewById(R.id.editTextItemQuantity);
-                EditText editTextItemUnit = (EditText) findViewById(R.id.editTextItemUnit);
 
 
 
-                itemName = editTextItemName.getText().toString();
-                itemPrice = editTextItemPrice.getText().toString();
-                itemPriority = editTextItemPriority.getText().toString();
-                itemQuantity = editTextItemQuantity.getText().toString();
-                itemUnit = editTextItemUnit.getText().toString();
-
-               // myShoppingCarts.child(MainActivity.getId());
-               // String id = MainActivity.getId();
-
-                Bundle bundle = new Bundle();
-
-                bundle.putString("key_itemName", itemName);
-                bundle.putString("key_itemPrice", itemPrice);
-                bundle.putString("key_itemPriority", itemPriority);
-                bundle.putString("key_itemQuantity", itemQuantity);
-                bundle.putString("key_itemUnit", itemUnit);
 
 
 
                 Intent startIntent = new Intent(getApplicationContext(), Central.class);
 
-                itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+                startIntent.putExtra("key_userName", shoppingCart.getUserName());
 
-                //startIntent.putExtra("key_bundle", bundle);
 
-                //shoppingCart.setItemList(itemList);
-
-               // startIntent.putExtra("key_shoppingCart", shoppingCart);
+                //itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
 
 
                 startActivity(startIntent);
