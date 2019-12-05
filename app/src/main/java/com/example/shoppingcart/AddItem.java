@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -103,6 +104,7 @@ public class AddItem extends AppCompatActivity{
                 buttonAddItemToCart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         itemName = editTextItemName.getText().toString();
                         itemPrice = editTextItemPrice.getText().toString();
                         itemPriority = editTextItemPriority.getText().toString();
@@ -110,21 +112,29 @@ public class AddItem extends AppCompatActivity{
                         itemUnit = editTextItemUnit.getText().toString();
 
 
+                        if(itemName.isEmpty() || itemPrice.isEmpty() || itemPriority.isEmpty() || itemQuantity.isEmpty() || itemUnit.isEmpty()){
 
-                        itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
-
-                        myShoppingCarts.child("itemList").setValue(itemList);
-
-
-                        Intent startIntent = new Intent(getApplicationContext(), Central.class);
-
-                        startIntent.putExtra("key_userName", shoppingCart.getUserName());
+                            Toast.makeText(getApplicationContext(), "Please make entries in all fields.", Toast.LENGTH_LONG).show();
 
 
-                        //itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+                        }else {
 
 
-                        startActivity(startIntent);
+                            itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+
+                            myShoppingCarts.child("itemList").setValue(itemList);
+
+
+                            Intent startIntent = new Intent(getApplicationContext(), Central.class);
+
+                            startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
+
+                            //itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+
+
+                            startActivity(startIntent);
+                        }
 
 
 
@@ -189,7 +199,7 @@ public class AddItem extends AppCompatActivity{
         });
 
 
-        buttonAddItemToCart.setOnClickListener(new View.OnClickListener() {
+       /* buttonAddItemToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -212,12 +222,14 @@ public class AddItem extends AppCompatActivity{
 
 
             }
-        });
+        });*/
 
         buttonBack2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startIntent = new Intent(getApplicationContext(), Central.class);
+                startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
                 startActivity(startIntent);
 
             }

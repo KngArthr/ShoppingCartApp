@@ -7,10 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,28 +75,61 @@ public class MainActivity extends AppCompatActivity {
                 bankAccount = editTextBudget.getText().toString();
 
 
-                if(userName.isEmpty() && bankAccount.isEmpty()){
+                if(userName.isEmpty() || bankAccount.isEmpty()){
 
-                    Toast.makeText(getApplicationContext(), "Please make entries in both fields.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please make entries in all fields.", Toast.LENGTH_LONG).show();
 
 
                 }else{
 
+                    myShoppingCarts.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    shoppingCart.setUserName(userName);
-                    shoppingCart.setBankAccount(bankAccount);
+                            if(dataSnapshot.child(userName).exists()){
+                                shoppingCart.setUserName((String) dataSnapshot.child(userName).child("userName").getValue());
+                                shoppingCart.setBankAccount(bankAccount);
+                                myShoppingCarts.child(shoppingCart.getUserName()).child("bankAccount").setValue(bankAccount);
 
-                    myShoppingCarts.child(shoppingCart.getUserName()).setValue(shoppingCart);
 
 
 
-                    Toast.makeText(getApplicationContext(), "Created new shopping cart with Username: " + shoppingCart.getUserName() + " and Budget: " + shoppingCart.getBankAccount(), Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                shoppingCart.setUserName(userName);
 
-                    Intent startIntent = new Intent(MainActivity.this, Central.class);
+                                shoppingCart.setBankAccount(bankAccount);
 
-                    startIntent.putExtra("key_userName", shoppingCart.getUserName());
+                                myShoppingCarts.child(shoppingCart.getUserName()).setValue(shoppingCart);
+                            }
 
-                    startActivity(startIntent);
+                            Toast.makeText(getApplicationContext(), "Created new shopping cart with Username: " + ((String) dataSnapshot.child(userName).child("userName").getValue()) + " and Budget: " + ((String) dataSnapshot.child(shoppingCart.getUserName()).child("bankAccount").getValue()), Toast.LENGTH_LONG).show();
+
+                            Intent startIntent = new Intent(MainActivity.this, Central.class);
+
+                            startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
+                            startActivity(startIntent);
+
+
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
+
+
+
+
+
 
 
                 }

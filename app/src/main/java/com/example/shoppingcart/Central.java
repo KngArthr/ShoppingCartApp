@@ -145,6 +145,9 @@ public class Central extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startIntent = new Intent(getApplicationContext(), MainActivity.class);
 
+                startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
+
                 startActivity(startIntent);
 
             }
