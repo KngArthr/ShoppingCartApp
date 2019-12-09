@@ -22,15 +22,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> mImageNames = new ArrayList<>();
+    //private ArrayList<String> mImageNames = new ArrayList<>();
     private ArrayList<String> mImages = new ArrayList<>();
+    private ArrayList<ItemClass> itemList = new ArrayList<>();
     private Context mContext;
 
 
-    public RecyclerViewAdapter(ArrayList<String> mImageNames, ArrayList<String> mImages, Context mContext) {
-        this.mImageNames = mImageNames;
+    public RecyclerViewAdapter(ArrayList<ItemClass> itemList, ArrayList<String> mImages, Context mContext) {
+        //this.mImageNames = mImageNames;
         this.mImages = mImages;
         this.mContext = mContext;
+        this.itemList = itemList;
     }
 
     @NonNull
@@ -49,13 +51,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .asBitmap()
                 .load(mImages.get(position))
                 .into(holder.image);
-        holder.imageName.setText(mImageNames.get(position));
+
+
+        holder.itemName.setText(itemList.get(position).getItemName());
+        holder.itemPrice.setText(String.valueOf(itemList.get(position).getPrice()));
+        holder.itemQuantity.setText(itemList.get(position).getQuantity());
+        holder.itemUnit.setText(itemList.get(position).getUnit());
+        holder.itemFinalPrice.setText(String.valueOf(itemList.get(position)));
+        holder.itemPriority.setText(String.valueOf(itemList.get(position)));
+
+
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + mImageNames.get(position));
+                Log.d(TAG, "onClick: clicked on: " + itemList.get(position));
 
-                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, itemList.get(position).getItemName(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -63,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mImageNames.size();
+        return itemList.size();
     }
 
 
@@ -71,12 +83,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
         CircleImageView image;
-        TextView imageName;
+        TextView itemName;
+        TextView itemPrice;
+        TextView itemQuantity;
+        TextView itemUnit;
+        TextView itemFinalPrice;
+        TextView itemPriority;
+
+
+
         RelativeLayout parentLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
-            imageName = itemView.findViewById(R.id.image_name);
+            itemName = itemView.findViewById(R.id.item_name);
+            itemPrice = itemView.findViewById(R.id.item_price);
+            itemQuantity = itemView.findViewById(R.id.item_quantity);
+            itemUnit = itemView.findViewById(R.id.item_unit);
+            itemFinalPrice = itemView.findViewById(R.id.item_finalPrice);
+            itemPriority = itemView.findViewById(R.id.item_priority);
+
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
 
