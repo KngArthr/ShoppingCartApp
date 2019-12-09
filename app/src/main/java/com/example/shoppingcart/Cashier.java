@@ -16,6 +16,10 @@ public class Cashier implements CashierInterface, PrintOutputInterface{
     private ShoppingCart shoppingCart;
     private String bankAccountInitial;
 
+
+
+
+
     Cashier(String fileWrite, ShoppingCart shoppingCart){
 
         this.fileNameWrite = new File(fileWrite);

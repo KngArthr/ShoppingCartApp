@@ -149,6 +149,7 @@ public class ShoppingCart implements ShoppingCartInterface, Parcelable {
 
 		System.out.println(bankAccount + "$ is your budget");
 
+
 		System.out.println("Grocery List:");
 		for(int i = 0; i < itemList.size(); i++) {
 

@@ -86,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
                             if(dataSnapshot.child(userName).exists()){
                                 shoppingCart.setUserName((String) dataSnapshot.child(userName).child("userName").getValue());
-                                shoppingCart.setBankAccount(bankAccount);
                                 myShoppingCarts.child(shoppingCart.getUserName()).child("bankAccount").setValue(bankAccount);
 
 
@@ -97,13 +97,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else{
                                 shoppingCart.setUserName(userName);
-
-                                shoppingCart.setBankAccount(bankAccount);
-
                                 myShoppingCarts.child(shoppingCart.getUserName()).setValue(shoppingCart);
                             }
+                            shoppingCart.setBankAccount(bankAccount);
 
-                            Toast.makeText(getApplicationContext(), "Created new shopping cart with Username: " + ((String) dataSnapshot.child(userName).child("userName").getValue()) + " and Budget: " + ((String) dataSnapshot.child(shoppingCart.getUserName()).child("bankAccount").getValue()), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Created new shopping cart with Username: " + ((String) dataSnapshot.child(userName).child("userName").getValue()) + " and Budget: " + bankAccount, Toast.LENGTH_LONG).show();
 
                             Intent startIntent = new Intent(MainActivity.this, Central.class);
 

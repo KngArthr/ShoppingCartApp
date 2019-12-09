@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +16,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class Central extends AppCompatActivity {
     String userName;
     String bankAccount;
+
+    //private ArrayList<ItemClass> itemList = new ArrayList<>();
+
+
+
 
     DatabaseReference myShoppingCarts;
 
@@ -89,10 +97,6 @@ public class Central extends AppCompatActivity {
 
 
 
-        //itemList.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
-
-
-
 
         buttonAddItemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,13 +119,36 @@ public class Central extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent startIntent = new Intent(getApplicationContext(), ItemsListScroll.class);
 
-                startIntent.putExtra("key_userName", shoppingCart.getUserName());
+                myShoppingCarts.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if((ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue() != null){
+                            Intent startIntent = new Intent(getApplicationContext(), ItemsListScroll.class);
+
+                            startIntent.putExtra("key_userName", shoppingCart.getUserName());
 
 
 
-                startActivity(startIntent);
+                            startActivity(startIntent);
+
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Please add items to the shopping cart.", Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
             }
         });
@@ -130,12 +157,38 @@ public class Central extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent startIntent = new Intent(getApplicationContext(), FinalList.class);
-
-                startIntent.putExtra("key_userName", shoppingCart.getUserName());
 
 
-                startActivity(startIntent);
+                myShoppingCarts.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if((ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue() != null){
+
+                            Intent startIntent = new Intent(getApplicationContext(), FinalList.class);
+
+                            startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
+
+
+                            startActivity(startIntent);
+
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Please add items to the shopping cart.", Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
             }
         });
