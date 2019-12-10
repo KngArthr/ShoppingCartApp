@@ -20,9 +20,9 @@ public class Cashier implements CashierInterface, PrintOutputInterface{
 
 
 
-    Cashier(String fileWrite, ShoppingCart shoppingCart){
+    Cashier(ShoppingCart shoppingCart){
 
-        this.fileNameWrite = new File(fileWrite);
+        //this.fileNameWrite = new File(fileWrite);
         this.shoppingCart = shoppingCart;
 
         itemsBought = new ArrayList<ItemClass>();
@@ -30,7 +30,7 @@ public class Cashier implements CashierInterface, PrintOutputInterface{
         bankAccountInitial = shoppingCart.getBankAccount();
 
         buyItems();
-        writeItemsToFile();
+        //writeItemsToFile();
 
 
     }

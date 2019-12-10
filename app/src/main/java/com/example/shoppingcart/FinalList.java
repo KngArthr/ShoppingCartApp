@@ -57,6 +57,8 @@ public class FinalList extends AppCompatActivity {
 
     private FilterData filterData;
 
+    private Cashier cashier;
+
     DatabaseReference myShoppingCarts;
 
 
@@ -124,6 +126,8 @@ public class FinalList extends AppCompatActivity {
 
                 shoppingCart.setItemList(itemList);
                 shoppingCart.setItemListSorted(filterData.bubbleSortByPriority(itemListSorted));
+
+                cashier = new Cashier(shoppingCart);
 
                 initImageBitmaps();
 
@@ -197,7 +201,7 @@ public class FinalList extends AppCompatActivity {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.rvFinalList);
-        RecyclerViewAdpterFinal adapter = new RecyclerViewAdpterFinal(shoppingCart.getItemListSorted(), mImageUrls, this);
+        RecyclerViewAdpterFinal adapter = new RecyclerViewAdpterFinal(cashier.getItemsBought(), mImageUrls, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
