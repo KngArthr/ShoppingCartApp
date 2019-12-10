@@ -1,5 +1,6 @@
 package com.example.shoppingcart;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,9 @@ public class Central extends AppCompatActivity {
     String bankAccount;
 
     //private ArrayList<ItemClass> itemList = new ArrayList<>();
+
+    ArrayList<ItemClass> itemList;
+    ArrayList<ItemClass> itemListSorted;
 
 
 
@@ -83,6 +87,8 @@ public class Central extends AppCompatActivity {
 
                 userName = dataSnapshot.child("userName").getValue().toString();
 
+                itemList = (ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue();
+
                 textViewbankAccount.setText(bankAccount + "");
 
                 textViewUsername.setText(shoppingCart.getUserName() + "");
@@ -125,7 +131,17 @@ public class Central extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         if((ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue() != null){
+
+                            myShoppingCarts.child("itemListSorted").setValue(itemList);
+
+
+                            myShoppingCarts.child("itemListSorted").orderByChild("priority");
+                            itemListSorted = (ArrayList<ItemClass>) dataSnapshot.child("itemListSorted").getValue();
+
+
                             Intent startIntent = new Intent(getApplicationContext(), ItemsListScroll.class);
+
+
 
                             startIntent.putExtra("key_userName", shoppingCart.getUserName());
 

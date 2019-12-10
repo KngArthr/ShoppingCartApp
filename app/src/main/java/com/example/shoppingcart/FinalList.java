@@ -1,14 +1,18 @@
 package com.example.shoppingcart;
 
+import android.content.ClipData;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,6 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class FinalList extends AppCompatActivity {
 
@@ -23,6 +30,14 @@ public class FinalList extends AppCompatActivity {
 
     private String userName;
     private String bankAccount;
+
+
+    private String itemName;
+    private String itemPrice;
+    private String itemPriority;
+    private String itemQuantity;
+    private String itemUnit;
+
 
     //vars
     private ArrayList<String> mNames = new ArrayList<>();
@@ -32,11 +47,18 @@ public class FinalList extends AppCompatActivity {
 
     private ArrayList<ItemClass> itemListSorted = new ArrayList<>();
 
+    private HashMap<Integer, ItemClass> itemListMap = new HashMap<>();
+
+    private HashMap<Integer, Object> itemComponent = new HashMap<>();
+
+
+
     private ShoppingCart shoppingCart;
 
     private FilterData filterData;
 
     DatabaseReference myShoppingCarts;
+
 
 
     @Override
@@ -59,7 +81,10 @@ public class FinalList extends AppCompatActivity {
 
 
 
-        myShoppingCarts.addValueEventListener(new ValueEventListener() {
+
+
+
+        myShoppingCarts.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -67,21 +92,40 @@ public class FinalList extends AppCompatActivity {
                 bankAccount = dataSnapshot.child("bankAccount").getValue().toString();
 
                 userName = dataSnapshot.child("userName").getValue().toString();
+                int iter = 0;
 
                 itemList = (ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue();
 
+                for(int i = 0; i < itemList.size(); i++) {
+
+
+                    itemName = (String) dataSnapshot.child("itemList").child(String.valueOf(i)).child("itemName").getValue();
+                    itemPrice = String.valueOf(dataSnapshot.child("itemList").child(String.valueOf(i)).child("price").getValue());
+                    itemPriority = String.valueOf(dataSnapshot.child("itemList").child(String.valueOf(i)).child("priority").getValue());
+                    itemQuantity = String.valueOf(dataSnapshot.child("itemList").child(String.valueOf(i)).child("quantity").getValue());
+                    itemUnit = (String) dataSnapshot.child("itemList").child(String.valueOf(i)).child("unit").getValue();
+
+                    itemListSorted.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+
+
+                }
+
+
+
+                iter = 0;
+
+
                 shoppingCart.setUserName(userName);
                 shoppingCart.setBankAccount(bankAccount);
+
+
+
+
+
                 shoppingCart.setItemList(itemList);
+                shoppingCart.setItemListSorted(filterData.bubbleSortByPriority(itemListSorted));
 
-
-                shoppingCart.setItemListSorted(filterData.bubbleSortByPriority(itemList));
-
-                itemListSorted = shoppingCart.getItemListSorted();
-
-                myShoppingCarts.child(shoppingCart.getUserName()).child("itemListSorted").setValue(itemListSorted);
-
-
+                initImageBitmaps();
 
 
 
@@ -96,9 +140,33 @@ public class FinalList extends AppCompatActivity {
 
 
 
-        initImageBitmaps();
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        myShoppingCarts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+    }
+
 
     private void initImageBitmaps(){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
@@ -129,7 +197,7 @@ public class FinalList extends AppCompatActivity {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.rvFinalList);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemListSorted, mImageUrls, this);
+        RecyclerViewAdpterFinal adapter = new RecyclerViewAdpterFinal(shoppingCart.getItemListSorted(), mImageUrls, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

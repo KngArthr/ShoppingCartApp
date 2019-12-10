@@ -19,10 +19,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdpterFinal  extends RecyclerView.Adapter<RecyclerViewAdpterFinal.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
-
+    private static final String TAG = "RecyclerViewAdapterFina";
     //private ArrayList<String> mImageNames = new ArrayList<>();
     private ArrayList<String> mImages = new ArrayList<>();
     private ArrayList<ItemClass> itemList = new ArrayList<>();
@@ -31,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     DecimalFormat df2 = new DecimalFormat("#.##");
 
 
-    public RecyclerViewAdapter(ArrayList<ItemClass> itemList, ArrayList<String> mImages, Context mContext) {
+    public RecyclerViewAdpterFinal(ArrayList<ItemClass> itemList, ArrayList<String> mImages, Context mContext) {
         //this.mImageNames = mImageNames;
         this.mImages = mImages;
         this.mContext = mContext;
@@ -42,12 +41,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        RecyclerViewAdpterFinal.ViewHolder holder = new RecyclerViewAdpterFinal.ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewAdpterFinal.ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called");
 
         Glide.with(mContext)
@@ -113,4 +112,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     }
+
 }
