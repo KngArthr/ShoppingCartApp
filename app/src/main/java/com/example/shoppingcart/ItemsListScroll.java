@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ItemsListScroll extends AppCompatActivity {
 
@@ -24,6 +25,14 @@ public class ItemsListScroll extends AppCompatActivity {
     private String userName;
     private String bankAccount;
 
+
+    private String itemName;
+    private String itemPrice;
+    private String itemPriority;
+    private String itemQuantity;
+    private String itemUnit;
+
+
     //vars
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
@@ -32,11 +41,18 @@ public class ItemsListScroll extends AppCompatActivity {
 
     private ArrayList<ItemClass> itemListSorted = new ArrayList<>();
 
+    private HashMap<Integer, ItemClass> itemListMap = new HashMap<>();
+
+    private HashMap<Integer, Object> itemComponent = new HashMap<>();
+
+
+
     private ShoppingCart shoppingCart;
 
     private FilterData filterData;
 
     DatabaseReference myShoppingCarts;
+
 
 
     @Override
@@ -59,7 +75,10 @@ public class ItemsListScroll extends AppCompatActivity {
 
 
 
-        myShoppingCarts.addValueEventListener(new ValueEventListener() {
+
+
+
+        myShoppingCarts.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -67,21 +86,40 @@ public class ItemsListScroll extends AppCompatActivity {
                 bankAccount = dataSnapshot.child("bankAccount").getValue().toString();
 
                 userName = dataSnapshot.child("userName").getValue().toString();
+                int iter = 0;
 
                 itemList = (ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue();
 
+                for(int i = 0; i < itemList.size(); i++) {
+
+
+                    itemName = (String) dataSnapshot.child("itemList").child(String.valueOf(i)).child("itemName").getValue();
+                    itemPrice = String.valueOf(dataSnapshot.child("itemList").child(String.valueOf(i)).child("price").getValue());
+                    itemPriority = String.valueOf(dataSnapshot.child("itemList").child(String.valueOf(i)).child("priority").getValue());
+                    itemQuantity = String.valueOf(dataSnapshot.child("itemList").child(String.valueOf(i)).child("quantity").getValue());
+                    itemUnit = (String) dataSnapshot.child("itemList").child(String.valueOf(i)).child("unit").getValue();
+
+                    itemListSorted.add(new ItemClass(itemName, Integer.parseInt(itemPriority), Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemUnit));
+
+
+                }
+
+
+
+                iter = 0;
+
+
                 shoppingCart.setUserName(userName);
                 shoppingCart.setBankAccount(bankAccount);
+
+
+
+
+
                 shoppingCart.setItemList(itemList);
+                shoppingCart.setItemListSorted(filterData.bubbleSortByPriority(itemListSorted));
 
-
-                shoppingCart.setItemListSorted(filterData.bubbleSortByPriority(itemList));
-
-                itemListSorted = shoppingCart.getItemListSorted();
-
-                myShoppingCarts.child(shoppingCart.getUserName()).child("itemListSorted").setValue(itemListSorted);
-
-
+                initImageBitmaps();
 
 
 
@@ -96,16 +134,40 @@ public class ItemsListScroll extends AppCompatActivity {
 
 
 
-        initImageBitmaps();
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        myShoppingCarts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+    }
+
 
     private void initImageBitmaps(){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
         mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
 
-        mImageUrls.add("https://i.redd.it/tpsnoz5bzo501.jpg");
+        mImageUrls.add("https://i0.wp.com/thepointsguy.com/wp-content/uploads/2019/05/chantal-garnier-1464696-unsplash.jpg?resize=480%2C270px&ssl=1");
 
         mImageUrls.add("https://i.redd.it/qn7f9oqu7o501.jpg");
 
@@ -129,7 +191,7 @@ public class ItemsListScroll extends AppCompatActivity {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.rvFinalList);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemListSorted, mImageUrls, this);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(shoppingCart.getItemListSorted(), mImageUrls, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
