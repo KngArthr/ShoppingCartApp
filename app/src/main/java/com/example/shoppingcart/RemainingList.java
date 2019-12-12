@@ -16,9 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FinalList extends AppCompatActivity {
+public class RemainingList extends AppCompatActivity {
 
-    private static final String TAG = "FinalList";
+    private static final String TAG = "RemaList";
 
     private String userName;
     private String bankAccount;
@@ -54,7 +54,7 @@ public class FinalList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_final_list);
+        setContentView(R.layout.activity_remaining_list);
         Log.d(TAG, "onCreate: started.");
 
         filterData = new FilterData();
@@ -189,7 +189,7 @@ public class FinalList extends AppCompatActivity {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.rvFinalList);
-        RecyclerViewAdpterFinal adapter = new RecyclerViewAdpterFinal(cashier.getItemsBought(), mImageUrls, this);
+        RecyclerViewAdpterFinal adapter = new RecyclerViewAdpterFinal(cashier.getItemsRemaining(), mImageUrls, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

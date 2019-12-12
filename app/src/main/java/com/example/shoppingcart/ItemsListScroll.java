@@ -15,7 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ItemsListScroll extends AppCompatActivity {
 
@@ -34,16 +33,11 @@ public class ItemsListScroll extends AppCompatActivity {
 
 
     //vars
-    private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
 
     private ArrayList<ItemClass> itemList = new ArrayList<>();
 
     private ArrayList<ItemClass> itemListSorted = new ArrayList<>();
-
-    private HashMap<Integer, ItemClass> itemListMap = new HashMap<>();
-
-    private HashMap<Integer, Object> itemComponent = new HashMap<>();
 
 
 

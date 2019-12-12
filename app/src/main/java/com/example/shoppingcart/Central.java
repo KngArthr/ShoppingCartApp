@@ -1,6 +1,5 @@
 package com.example.shoppingcart;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -68,6 +67,8 @@ public class Central extends AppCompatActivity {
         Button buttonAddItemView = (Button) findViewById(R.id.buttonAddItemView);
         Button buttonItemList = (Button) findViewById(R.id.buttonItemList);
         Button buttonBuyItems = (Button) findViewById(R.id.buttonBuyItems);
+        Button buttonRemaining = (Button) findViewById(R.id.buttonRemaining);
+
 
         Button buttonBack1 = (Button) findViewById(R.id.buttonBack1);
 
@@ -182,6 +183,45 @@ public class Central extends AppCompatActivity {
                         if((ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue() != null){
 
                             Intent startIntent = new Intent(getApplicationContext(), FinalList.class);
+
+                            startIntent.putExtra("key_userName", shoppingCart.getUserName());
+
+
+
+                            startActivity(startIntent);
+
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Please add items to the shopping cart.", Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+            }
+        });
+        buttonRemaining.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                myShoppingCarts.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if((ArrayList<ItemClass>) dataSnapshot.child("itemList").getValue() != null){
+
+                            Intent startIntent = new Intent(getApplicationContext(), RemainingList.class);
 
                             startIntent.putExtra("key_userName", shoppingCart.getUserName());
 

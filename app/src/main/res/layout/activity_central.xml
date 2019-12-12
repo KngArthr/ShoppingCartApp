@@ -16,13 +16,13 @@
         app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.695" />
+        app:layout_constraintVertical_bias="0.795" />
 
     <Button
         android:id="@+id/buttonItemList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="44dp"
         android:text="Item List"
         app:layout_constraintBottom_toTopOf="@+id/buttonBuyItems"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,9 +33,9 @@
         android:id="@+id/buttonBuyItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="44dp"
         android:text="Buy Items"
-        app:layout_constraintBottom_toTopOf="@+id/buttonBack1"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRemaining"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintStart_toStartOf="parent" />
@@ -74,5 +74,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonRemaining"
+        android:layout_width="152dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="88dp"
+        android:text="Remaining Items"
+        app:layout_constraintBottom_toTopOf="@+id/buttonBack1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.563"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
